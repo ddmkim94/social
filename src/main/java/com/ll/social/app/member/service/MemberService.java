@@ -64,6 +64,18 @@ public class MemberService implements UserDetailsService {
         return member;
     }
 
+    public Member join(String username, String password, String email) {
+        Member member = Member.builder()
+                .username(username)
+                .password(password)
+                .email(email)
+                .build();
+
+        memberRepository.save(member);
+
+        return member;
+    }
+
     /**
      * 스프링 시큐리티 사용을 위해서 반드시 있어야함
      * username 줄테니까 사용자 정보 줘!
@@ -78,5 +90,9 @@ public class MemberService implements UserDetailsService {
         authorities.add(new SimpleGrantedAuthority("member"));
 
         return new User(member.getUsername(), member.getPassword(), authorities);
+    }
+
+    public long count() {
+        return memberRepository.count();
     }
 }
