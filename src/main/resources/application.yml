@@ -18,4 +18,4 @@ spring:
     hibernate:
       ddl-auto: create
 custom: # 코드 작성을 할 때 파일 경로를 가져오기 위해 추가
-  genFileDirPath: /Users/dongmin/Desktop/upload
+  genFileDirPath: /Users/dongmin/Desktop/upload/
