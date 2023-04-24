@@ -9,37 +9,45 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.UUID;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberRepository memberRepository;
-
     @Value("${custom.genFileDirPath}")
     private String fileDirPath;
 
-    public void join(String username, String password, String email, MultipartFile profileImg) {
-        String profileImgPath = fileDirPath + profileImg.getOriginalFilename();
+    private final MemberRepository memberRepository;
+
+    @Transactional(readOnly = true)
+    public Member getMemberByUsername(String username) {
+        return memberRepository.findByUsername(username).orElse(null);
+    }
+
+    public Member join(String username, String password, String email, MultipartFile profileImg) {
+
+        String profileImgRelPath = "member/" + UUID.randomUUID().toString() + ".png";
+
+        File profileImgFile = new File(fileDirPath + profileImgRelPath);
+        profileImgFile.mkdirs(); // 폴더가 없는 경우 해당 폴더를 생성해준다.
+
         try {
-            profileImg.transferTo(new File(profileImgPath));
-
-            Member member = Member.builder()
-                    .username(username)
-                    .password(password)
-                    .email(email)
-                    .profileImg("http://localhost:8010/gen/" + profileImg.getOriginalFilename())
-                    .build();
-
-            memberRepository.save(member);
+            profileImg.transferTo(profileImgFile);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
 
-    @Transactional(readOnly = true)
-    public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username).get();
+        Member member = Member.builder()
+                .username(username)
+                .password(password)
+                .email(email)
+                .profileImg(profileImgRelPath)
+                .build();
+
+        memberRepository.save(member);
+
+        return member;
     }
 }

@@ -1,23 +1,22 @@
 package com.ll.social.app.member.entity;
 
 import com.ll.social.app.base.entity.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-@Getter
 @Setter
-@SuperBuilder
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+@ToString(callSuper = true)
 public class Member extends BaseEntity {
 
+    @Column(unique = true)
     private String username;
     private String password;
     private String email;
