@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>회원가입</h1>
+    <form th:action="@{/member/join}" method="post" enctype="multipart/form-data" onsubmit="JoinForm__submit(this); return false;">
+        <div>
+            <label for="username">아이디</label>
+            <input type="text" id="username" name="username">
+        </div>
+
+        <div>
+            <label for="password">비번</label>
+            <input type="password" id="password" name="password">
+        </div>
+
+        <div>
+            <label for="email">이메일</label>
+            <input type="text" id="email" name="email">
+        </div>
+
+        <div>
+            <label for="profileImg">프로필 이미지</label>
+            <input type="file" id="profileImg" name="profileImg">
+        </div>
+
+        <button type="submit">회원가입</button>
+    </form>
+
+    <script>
+        function JoinForm__submit(form) {
+            if (form.username.value.trim().length == 0) {
+                alert('아이디 입력해라');
+                form.username.focus();
+                return;
+            }
+
+            if (form.password.value.trim().length == 0) {
+                alert('비밀번호 입력해라');
+                form.password.focus();
+                return;
+            }
+
+            if (form.email.value.trim().length == 0) {
+                alert('이메일 입력해라');
+                form.email.focus();
+                return;
+            }
+
+            form.submit();
+        }
+    </script>
+</body>
+</html>

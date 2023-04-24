@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>프로필</h1>
+    <div style="display: flex; flex-direction: column;">
+        <img th:src="${member.profileImg}" style="width: 100px; height: 100px; object-fit: cover;">
+        <span th:text="|아이디: ${member.username}|"></span>
+        <span th:text="|이메일: ${member.email}|"></span>
+    </div>
+</body>
+</html>

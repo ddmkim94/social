@@ -15,6 +15,9 @@ public class SecurityConfig {
         return http.csrf().disable()
                 .authorizeRequests().antMatchers("/**").permitAll()
                 .and()
+                .formLogin()
+                .defaultSuccessUrl("/member/profile")
+                .and()
                 .build();
     }
 }
