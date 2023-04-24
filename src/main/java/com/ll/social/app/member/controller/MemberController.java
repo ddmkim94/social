@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -21,29 +23,41 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    @ResponseBody
     public String join(
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             @RequestParam("email") String email,
-            @RequestParam("profileImg") MultipartFile profileImg) {
+            @RequestParam("profileImg") MultipartFile profileImg,
+            HttpSession session) {
 
         Member oldMember = memberService.getMemberByUsername(username);
 
         if (oldMember != null) {
-            return "이미 가입된 회원입니다!";
+            return "redirect:/?errorMsg=Already Join User!";
         }
 
         // noop: 비번 암호화 시키고 싶을 때 붙여줌.
         // TODO: PasswordEncoder 가 대체할 예정
-        memberService.join(username, "{noop}" + password, email, profileImg);
+        Member member = memberService.join(username, "{noop}" + password, email, profileImg);
 
-        return "가입완료!";
+        session.setAttribute("loginedMemberId", member.getId());
+
+        return "redirect:/member/profile";
     }
 
     @GetMapping("/profile")
-    public String profile(Model model, @RequestParam("username") String username) {
-        model.addAttribute("member", memberService.getMemberByUsername(username));
+    public String profile(HttpSession session, Model model) {
+        Long loginedMemberId = (Long) session.getAttribute("loginedMemberId");
+        boolean isLogined = loginedMemberId != null;
+
+        if (!isLogined) {
+            // TODO: 한글 처리 필요함
+            return "redirect:/?errorMsg=Need to Login!";
+        }
+
+        Member loginedMember = memberService.getMemberById(loginedMemberId);
+        model.addAttribute("member", loginedMember);
+
         return "member/profile";
     }
 }

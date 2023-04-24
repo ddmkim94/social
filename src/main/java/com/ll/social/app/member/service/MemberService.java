@@ -26,6 +26,11 @@ public class MemberService {
         return memberRepository.findByUsername(username).orElse(null);
     }
 
+    @Transactional(readOnly = true)
+    public Member getMemberById(Long id) {
+        return memberRepository.findById(id).orElse(null);
+    }
+
     public Member join(String username, String password, String email, MultipartFile profileImg) {
 
         String profileImgRelPath = "member/" + UUID.randomUUID().toString() + ".png";

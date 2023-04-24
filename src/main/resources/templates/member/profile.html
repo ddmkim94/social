@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    .profile-img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10%;
+    }
+</style>
 <body>
     <h1>프로필</h1>
-    <div style="display: flex; flex-direction: column;">
-        <img th:src="${member.profileImg}" style="width: 100px; height: 100px; object-fit: cover;">
-        <span th:text="|아이디: ${member.username}|"></span>
-        <span th:text="|이메일: ${member.email}|"></span>
+    <div>
+        <img class="profile-img" th:src="@{|/gen/${member.profileImg}|}">
+        <div>
+            <span th:text="|아이디: ${member.username}|"></span>
+        </div>
+        <div>
+            <span th:text="|이메일: ${member.email}|"></span>
+        </div>
     </div>
 </body>
 </html>
