@@ -64,7 +64,12 @@ public class MemberService implements UserDetailsService {
         return member;
     }
 
-    // 스프링 시큐리티 사용을 위해서 반드시 있어야함
+    /**
+     * 스프링 시큐리티 사용을 위해서 반드시 있어야함
+     * username 줄테니까 사용자 정보 줘!
+     * User -> username, password, 권한들로 이루어져있다.
+     *
+      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
