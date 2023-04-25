@@ -25,16 +25,19 @@ public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/join")
     public String joinForm() {
         return "member/join";
     }
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
     public String LoginForm() {
         return "member/login";
     }
 
+    @PreAuthorize("isAnonymous()")
     @PostMapping("/join")
     public String join(
             HttpServletRequest req,
