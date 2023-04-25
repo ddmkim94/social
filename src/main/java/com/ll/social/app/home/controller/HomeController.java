@@ -33,8 +33,8 @@ public class HomeController {
         return "home/main";
     }
 
-    @GetMapping("/test/upload")
-    public String upload() {
-        return "home/test/upload";
+    @GetMapping("/about")
+    public String about(Principal principal, Model model) {
+        return "home/about";
     }
 }
