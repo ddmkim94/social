@@ -40,17 +40,21 @@ public class MemberService implements UserDetailsService {
     }
 
     public Member join(String username, String password, String email, MultipartFile profileImg) {
+        String profileImgDirName = "member";
+        String fileName = UUID.randomUUID().toString() + ".png";
+        String profileImgDirPath = fileDirPath + profileImgDirName; // /Users/dongmin/Desktop/upload/member
+        String profileImgFilePath = profileImgDirPath + "/" + fileName; // /Users/dongmin/Desktop/upload/member/touch.png
 
-        String profileImgRelPath = "member/" + UUID.randomUUID().toString() + ".png";
-
-        File profileImgFile = new File(fileDirPath + profileImgRelPath);
-        profileImgFile.mkdirs(); // 폴더가 없는 경우 해당 폴더를 생성해준다.
+        new File(profileImgDirPath).mkdirs(); // 폴더가 없는 경우 해당 폴더를 생성해준다.
 
         try {
-            profileImg.transferTo(profileImgFile);
+            profileImg.transferTo(new File(profileImgFilePath));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        // DB에 저장할 파일의 경로
+        String profileImgRelPath = profileImgDirName + "/" + fileName;
 
         Member member = Member.builder()
                 .username(username)
@@ -94,5 +98,12 @@ public class MemberService implements UserDetailsService {
 
     public long count() {
         return memberRepository.count();
+    }
+
+    public void removeProfileImg(Member member) {
+        member.removeProfileImgOnStorage();
+        member.setProfileImg(null);
+
+        memberRepository.save(member);
     }
 }
