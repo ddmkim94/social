@@ -30,6 +30,11 @@ public class MemberController {
         return "member/join";
     }
 
+    @GetMapping("/login")
+    public String LoginForm() {
+        return "member/login";
+    }
+
     @PostMapping("/join")
     public String join(
             HttpServletRequest req,
