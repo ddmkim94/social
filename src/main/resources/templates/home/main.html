@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        img {
+            width: 200px;
+            height: 200px;
+            border-radius: 10%;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
 <section layout:fragment="content">
     <div class="container">
         <header th:if="${loginedMember != null}">
-            user3 / <img th:src="@{${loginedMemberProfileImgUrl}}" alt="">
+            [[${loginedMember.username}]] / <img th:src="@{${loginedMemberProfileImgUrl}}" alt="">
         </header>
 
         <hr>
