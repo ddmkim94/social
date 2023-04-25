@@ -16,12 +16,12 @@
     <div class="container">
         <h1>프로필</h1>
         <div>
-            <img class="profile-img" th:src="@{|/gen/${member.profileImg}|}">
+            <img class="profile-img" th:src="@{${memberContext.profileImgUrl}}">
             <div>
-                <span th:text="|아이디: ${member.username}|"></span>
+                <span th:text="|아이디: ${memberContext.username}|"></span>
             </div>
             <div>
-                <span th:text="|이메일: ${member.email}|"></span>
+                <span th:text="|이메일: ${memberContext.email}|"></span>
             </div>
         </div>
     </div>

@@ -11,11 +11,13 @@ import java.util.List;
 public class MemberContext extends User {
 
     private final Long id;
+    private final String email;
     private final String profileImgUrl;
 
     public MemberContext(Member member, List<GrantedAuthority> authorityList) {
         super(member.getUsername(), member.getPassword(), authorityList);
         this.id = member.getId();
+        this.email = member.getEmail();
         this.profileImgUrl = member.getProfileImgUrl();
     }
 }
