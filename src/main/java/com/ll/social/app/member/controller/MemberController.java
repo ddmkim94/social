@@ -75,8 +75,7 @@ public class MemberController {
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
-    public String profile(@AuthenticationPrincipal MemberContext memberContext, Model model) {
-        model.addAttribute("memberContext", memberContext);
+    public String profile() {
         return "member/profile";
     }
 }
