@@ -3,6 +3,7 @@ package com.ll.social.app.security.service;
 import com.ll.social.app.member.entity.Member;
 import com.ll.social.app.member.exception.MemberNotFoundException;
 import com.ll.social.app.member.repository.MemberRepository;
+import com.ll.social.app.member.service.MemberService;
 import com.ll.social.app.security.dto.MemberContext;
 import com.ll.social.app.security.exception.OAuthTypeMatchNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import java.util.*;
 public class OAuth2UserService extends DefaultOAuth2UserService {
 
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @Override
     @Transactional
@@ -65,6 +67,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
                             .build();
 
                     memberRepository.save(member);
+                    memberService.setProfileImgByUrl(member, "https://mblogthumb-phinf.pstatic.net/20151115_83/owlkw_1447523205207J3E59_JPEG/Touch_%28Series%29_full_958683.jpg?type=w2");
                 }
             }
         } else {
