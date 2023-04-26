@@ -6,7 +6,7 @@ spring:
       client:
         registration:
           kakao:
-            scope: profile_nickname, profile_image, profile_email # 카카오 로그인 시 동의항목으로 설정한 값들을 작성 (이름 정해져있음)
+            scope: profile_nickname, profile_image, account_email # 카카오 로그인 시 동의항목으로 설정한 값들을 작성 (이름 정해져있음)
             client-name: Kakao
             authorization-grant-type: authorization_code
             redirect-uri: http://localhost:8010/login/oauth2/code/kakao # 카카오 개발자 사이트에서 추가한 Redirect URI 을 작성

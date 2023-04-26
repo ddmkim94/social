@@ -29,6 +29,8 @@ public class SecurityConfig {
                                 .loginPage("/member/login") // GET
                                 .loginProcessingUrl("/member/login") // POST
                 )
+                .oauth2Login() // OAuth2 로그인 활성화
+                .and()
                 .logout(logout -> logout
                         .logoutUrl("/member/logout"))
                 .build();
