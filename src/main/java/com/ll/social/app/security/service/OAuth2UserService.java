@@ -7,9 +7,9 @@ import com.ll.social.app.member.service.MemberService;
 import com.ll.social.app.security.dto.MemberContext;
 import com.ll.social.app.security.exception.OAuthTypeMatchNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -17,8 +17,11 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -49,10 +52,13 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         if (isNew(oauthType, oauthId)) {
             switch (oauthType) {
                 case "KAKAO" -> {
+                    log.debug("attributes : {}",attributes);
+
                     Map attributesProperties = (Map) attributes.get("properties");
                     Map attributesKakaoAccount = (Map) attributes.get("kakao_account");
 
                     String nickname = (String) attributesProperties.get("nickname");
+                    String profileImage = (String) attributesProperties.get("profile_image");
                     String email = "%s@kakao.com".formatted(oauthId); // 이메일이 안넘어올수도 있기 때문에 임의로 만들어줌 (oauthId는 로그인 하면 넘어오는 id값)
                     String username = "KAKAO_%s".formatted(oauthId); // username도 임의로 만들어줌
 
@@ -67,7 +73,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
                             .build();
 
                     memberRepository.save(member);
-                    memberService.setProfileImgByUrl(member, "https://mblogthumb-phinf.pstatic.net/20151115_83/owlkw_1447523205207J3E59_JPEG/Touch_%28Series%29_full_958683.jpg?type=w2");
+                    memberService.setProfileImgByUrl(member, profileImage);
                 }
             }
         } else {

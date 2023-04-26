@@ -35,3 +35,7 @@ spring:
       ddl-auto: create
 custom: # 코드 작성을 할 때 파일 경로를 가져오기 위해 추가
   genFileDirPath: /Users/dongmin/Desktop/upload/
+logging:
+  level:
+    root: info
+    com.ll.social.app: debug # debug > info
