@@ -12,7 +12,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.security.Principal;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -32,15 +30,15 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
 
     @PreAuthorize("isAnonymous()")
-    @GetMapping("/join")
-    public String joinForm() {
-        return "member/join";
-    }
-
-    @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
     public String LoginForm() {
         return "member/login";
+    }
+
+    @PreAuthorize("isAnonymous()")
+    @GetMapping("/join")
+    public String joinForm() {
+        return "member/join";
     }
 
     @PreAuthorize("isAnonymous()")
@@ -69,6 +67,24 @@ public class MemberController {
         } catch (ServletException e) {
             throw new RuntimeException(e);
         }
+
+        return "redirect:/member/profile";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/modify")
+    public String modifyForm() {
+        return "member/modify";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/modify")
+    public String modify(@AuthenticationPrincipal MemberContext context,
+                         @RequestParam("email") String email,
+                         @RequestParam("profileImg") MultipartFile profileImg) {
+
+        Member member = memberService.getMemberById(context.getId());
+        memberService.modify(member, email, profileImg);
 
         return "redirect:/member/profile";
     }

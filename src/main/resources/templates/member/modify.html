@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{layout/layout.html}">
+<head>
+    <title>회원 정보 수정</title>
+    <style>
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10%;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <h1>회원 정보 수정</h1>
+        <form th:action="@{/member/modify}" method="post" enctype="multipart/form-data" onsubmit="ModifyForm__submit(this); return false;">
+            <div>
+                <span>아이디</span>
+                <span th:text="${#authentication.principal.username}"></span>
+            </div>
+
+            <div>
+                <label for="email">이메일</label>
+                <input type="text" id="email" name="email" th:value="${#authentication.principal.email}">
+            </div>
+
+            <div>
+                <span>기존 프로필 이미지</span>
+                <img class="profile-img" th:src="@{|/member/profile/img/${#authentication.principal.id}|}">
+
+                <label for="profile__delete">
+                    삭제
+                    <input type="checkbox" id="profile__delete" name="profile__delete" value="Y" />
+                </label>
+            </div>
+
+            <div>
+                <label for="profileImg">새 프로필 이미지</label>
+                <input type="file" id="profileImg" name="profileImg">
+            </div>
+
+            <button type="submit" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-3 py-2 text-center mr-2 my-2">회원정보수정</button>
+        </form>
+
+        <script>
+            function ModifyForm__submit(form) {
+                if (form.email.value.trim().length == 0) {
+                    alert('이메일 입력해라');
+                    form.email.focus();
+                    return;
+                }
+
+                form.submit();
+            }
+        </script>
+    </div>
+</section>
+</body>
+</html>
