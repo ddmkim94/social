@@ -4,6 +4,10 @@ import com.ll.social.app.member.entity.Member;
 import com.ll.social.app.member.service.MemberService;
 import com.ll.social.app.security.dto.MemberContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.Principal;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("/member")
@@ -77,7 +84,12 @@ public class MemberController {
     }
 
     @GetMapping("/profile/img/{id}")
-    public String profileImg(@PathVariable Long id) {
-        return "redirect:" + memberService.getMemberById(id).getProfileImgUrl();
+    public ResponseEntity<Object> profileImg(@PathVariable Long id) throws URISyntaxException {
+        URI redirectUri = new URI(memberService.getMemberById(id).getProfileImgUrl());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(redirectUri);
+        headers.setCacheControl(CacheControl.maxAge(60 * 60 * 1, TimeUnit.SECONDS)); // 캐시 유효기간 1시간
+        return new ResponseEntity<>(headers, HttpStatus.FOUND);
+
     }
 }
