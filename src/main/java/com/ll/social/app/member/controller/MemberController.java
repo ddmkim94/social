@@ -81,9 +81,15 @@ public class MemberController {
     @PostMapping("/modify")
     public String modify(@AuthenticationPrincipal MemberContext context,
                          @RequestParam("email") String email,
-                         @RequestParam("profileImg") MultipartFile profileImg) {
+                         @RequestParam("profileImg") MultipartFile profileImg,
+                         @RequestParam(value = "profile__delete", required = false) String profileDelete) {
 
         Member member = memberService.getMemberById(context.getId());
+
+        if (profileDelete != null && profileDelete.equals("Y")) {
+            memberService.removeProfileImg(member);
+        }
+
         memberService.modify(member, email, profileImg);
 
         return "redirect:/member/profile";
