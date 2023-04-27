@@ -28,7 +28,7 @@
 
             <div>
                 <span>기존 프로필 이미지</span>
-                <img class="profile-img" th:src="@{|/member/profile/img/${#authentication.principal.id}|}">
+                <img class="profile-img" th:src="@{${#authentication.principal.profileImgRedirectUrl}}">
 
                 <label for="profile__delete">
                     삭제

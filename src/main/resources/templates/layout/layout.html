@@ -37,7 +37,7 @@
 
     <div class="container">
         <header sec:authorize="isAuthenticated()" class="flex items-center gap-2">
-            <img th:src="@{|/member/profile/img/${#authentication.principal.id}|}" class="w-20 h-20 rounded object-cover">
+            <img th:src="@{${#authentication.principal.profileImgRedirectUrl}}" class="w-20 h-20 rounded object-cover">
 
             <div th:text="|${#authentication.principal.username}님 환영합니다|"></div>
         </header>
