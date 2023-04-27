@@ -32,4 +32,8 @@ public class BaseEntity {
 
     @LastModifiedDate
     private LocalDateTime modifyDate;
+
+    public BaseEntity(Long id) {
+        this.id = id;
+    }
 }
