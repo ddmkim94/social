@@ -26,11 +26,12 @@
     <div class="container">
         <a href="/">메인</a>
         <a href="/about" sec:authorize="isAuthenticated()">어바웃</a>
-        <a href="/member/modify" sec:authorize="isAuthenticated()">회원정보수정</a>
         <a href="/member/login" sec:authorize="isAnonymous()">로그인</a>
         <a href="/member/join" sec:authorize="isAnonymous()">회원가입</a>
         <a href="/member/logout" sec:authorize="isAuthenticated()">로그아웃</a>
         <a href="/member/profile" sec:authorize="isAuthenticated()">프로파일</a>
+        <a href="/member/modify" sec:authorize="isAuthenticated()">회원정보수정</a>
+        <a href="/article/write" sec:authorize="isAuthenticated()">글쓰기</a>
     </div>
 
     <hr>
