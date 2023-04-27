@@ -9,12 +9,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.yaml.snakeyaml.util.UriEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -92,6 +94,18 @@ public class MemberController {
         }
 
         memberService.modify(member, email, profileImg);
+
+        // 기존에 시큐리티 세션에 저장된 MemberContext 객체의 내용을 수정
+        context.setModifyDate(member.getModifyDate());
+
+        // 스프링 시큐리티 세션 갱신
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(
+                        context,
+                        member.getPassword(),
+                        context.getAuthorities()
+                );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return "redirect:/member/profile";
     }

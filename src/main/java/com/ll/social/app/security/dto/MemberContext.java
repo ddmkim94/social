@@ -2,14 +2,15 @@ package com.ll.social.app.security.dto;
 
 import com.ll.social.app.member.entity.Member;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Getter
@@ -19,6 +20,9 @@ public class MemberContext extends User implements OAuth2User {
     private final String email;
     private final String profileImgUrl;
 
+    @Setter
+    private LocalDateTime modifyDate;
+
     private Map<String, Object> attributes;
     private String userNameAttributeName;
 
@@ -27,6 +31,7 @@ public class MemberContext extends User implements OAuth2User {
         this.id = member.getId();
         this.email = member.getEmail();
         this.profileImgUrl = member.getProfileImgUrl();
+        this.modifyDate = member.getModifyDate();
     }
 
     public MemberContext(Member member, List<GrantedAuthority> authorities, Map<String, Object> attributes, String userNameAttributeName) {
@@ -51,7 +56,7 @@ public class MemberContext extends User implements OAuth2User {
     }
 
     public String getProfileImgRedirectUrl() {
-        return "/member/profile/img/" + getId() + "?random=" + UUID.randomUUID();
+        return "/member/profile/img/" + getId() + "?cacheKey=" + modifyDate.toString();
     }
 
 }
