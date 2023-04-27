@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.yaml.snakeyaml.util.UriEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -107,7 +108,13 @@ public class MemberController {
 
     @GetMapping("/profile/img/{id}")
     public ResponseEntity<Object> profileImg(@PathVariable Long id) throws URISyntaxException {
-        URI redirectUri = new URI(memberService.getMemberById(id).getProfileImgUrl());
+        String profileImgUrl = memberService.getMemberById(id).getProfileImgUrl();
+
+        if (profileImgUrl == null) {
+            profileImgUrl = "https://via.placeholder.com/200x200.png?text=U_U";
+        }
+
+        URI redirectUri = new URI(profileImgUrl);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(redirectUri);
         headers.setCacheControl(CacheControl.maxAge(60 * 60 * 1, TimeUnit.SECONDS)); // 캐시 유효기간 1시간
