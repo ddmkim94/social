@@ -99,6 +99,12 @@ public class MemberController {
         context.setModifyDate(member.getModifyDate());
 
         // 스프링 시큐리티 세션 갱신
+        /**
+         * 세션에 값을 가지고 있으면 화면에서 간편하게 가져다 쓸 수 있는 장점이 있음.
+         * 또 사용자 정보를 db에서 가져올 필요가 없기 때문에 쿼리 실행도 줄기 때문에 성능적 이점도 가짐.
+         * 단, 세션과 db 사이의 데이터 불일치가 일어날 수 있기 때문에 데이터 동기화 작업을 신중하게 해줘야함..!
+         * 이걸 "trade-off" 라고 함.
+         */
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(
                         context,
