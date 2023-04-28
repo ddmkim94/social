@@ -3,6 +3,7 @@ package com.ll.social.app.article.controller;
 import com.ll.social.app.article.entity.Article;
 import com.ll.social.app.article.entity.dto.ArticleForm;
 import com.ll.social.app.article.service.ArticleService;
+import com.ll.social.app.fileupload.service.GenFileService;
 import com.ll.social.app.security.dto.MemberContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ import java.util.Map;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final GenFileService genFileService;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/write")
@@ -47,6 +49,7 @@ public class ArticleController {
         log.debug("fileMap : {}", fileMap);
 
         Article article = articleService.write(memberContext.getId(), form.getSubject(), form.getContent());
+        genFileService.saveFile(article, fileMap);
 
         return "작업중";
     }
