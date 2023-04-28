@@ -3,6 +3,8 @@ package com.ll.social.app.article.controller;
 import com.ll.social.app.article.entity.Article;
 import com.ll.social.app.article.entity.dto.ArticleForm;
 import com.ll.social.app.article.service.ArticleService;
+import com.ll.social.app.base.dto.RsData;
+import com.ll.social.app.fileupload.entity.GenFile;
 import com.ll.social.app.fileupload.service.GenFileService;
 import com.ll.social.app.security.dto.MemberContext;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +51,9 @@ public class ArticleController {
         log.debug("fileMap : {}", fileMap);
 
         Article article = articleService.write(memberContext.getId(), form.getSubject(), form.getContent());
-        genFileService.saveFile(article, fileMap);
+
+        RsData<Map<String, GenFile>> saveFileRsData = genFileService.saveFile(article, fileMap);
+        log.debug("saveFileRsDate : {}", saveFileRsData);
 
         return "작업중";
     }
