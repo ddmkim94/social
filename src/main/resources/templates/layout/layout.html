@@ -21,6 +21,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/css/bootstrap.min.css">
+<!-- toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 
 <header>
     <div class="container">
@@ -51,10 +54,18 @@
     <div>내용</div>
 </section>
 
-<footer>
+<footer></footer>
 
-</footer>
+<script src="/resource/common/common.js"></script>
+<script th:inline="javascript">
+    // param에 값이 있으면 주석이 해제되고 param의 값이 변수에 들어감ㅁ
+    const params = /*[[${param}]]*/ null;
 
+    if (params.msg) {
+        successModal(params.msg);
+    }
+
+
+</script>
 </body>
-
 </html>
