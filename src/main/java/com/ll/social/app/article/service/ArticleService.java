@@ -2,8 +2,8 @@ package com.ll.social.app.article.service;
 
 import com.ll.social.app.article.entity.Article;
 import com.ll.social.app.article.repository.ArticleRepository;
+import com.ll.social.app.fileupload.service.GenFileService;
 import com.ll.social.app.member.entity.Member;
-import com.ll.social.app.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,15 @@ import org.springframework.stereotype.Service;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final GenFileService genFileService;
 
     public Article write(Long authorId, String subject, String content) {
+        return write(new Member(authorId), subject, content);
+    }
+
+    public Article write(Member author, String subject, String content) {
         Article article = Article.builder()
-                .member(new Member(authorId))
+                .member(author)
                 .subject(subject)
                 .content(content)
                 .build();
@@ -25,5 +30,9 @@ public class ArticleService {
 
     public Article getArticleById(Long id) {
         return articleRepository.findById(id).orElse(null);
+    }
+
+    public void addGenFileByUrl(Article article, String typeCode, String type2Code, int fileNo, String url) {
+        genFileService.addGenFileByUrl("article", article.getId(), typeCode, type2Code, fileNo, url);
     }
 }
