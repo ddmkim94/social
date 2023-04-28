@@ -3,6 +3,7 @@ package com.ll.social.app.article.service;
 import com.ll.social.app.article.entity.Article;
 import com.ll.social.app.article.repository.ArticleRepository;
 import com.ll.social.app.member.entity.Member;
+import com.ll.social.app.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,9 @@ public class ArticleService {
                 .build();
 
         return articleRepository.save(article);
+    }
+
+    public Article getArticleById(Long id) {
+        return articleRepository.findById(id).orElse(null);
     }
 }
