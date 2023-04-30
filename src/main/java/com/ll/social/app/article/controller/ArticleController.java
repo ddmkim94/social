@@ -60,7 +60,7 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     public String detail(@PathVariable Long id, Model model) {
-        Article article = articleService.getArticleById(id);
+        Article article = articleService.getForPrintArticleById(id);
         model.addAttribute("article", article);
 
         return "article/detail";
