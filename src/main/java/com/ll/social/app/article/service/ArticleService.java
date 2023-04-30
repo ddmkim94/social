@@ -2,10 +2,13 @@ package com.ll.social.app.article.service;
 
 import com.ll.social.app.article.entity.Article;
 import com.ll.social.app.article.repository.ArticleRepository;
+import com.ll.social.app.fileupload.entity.GenFile;
 import com.ll.social.app.fileupload.service.GenFileService;
 import com.ll.social.app.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +42,10 @@ public class ArticleService {
     public Article getForPrintArticleById(Long id) {
         Article article = getArticleById(id);
 
-        article.getExtra().put("age", 22);
+        Map<String, GenFile> genFileMap = genFileService.getRelGenFileMap(article);
+
+        article.getExtra().put("genFileMap", genFileMap);
+
         return article;
     }
 }
