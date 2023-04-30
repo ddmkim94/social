@@ -28,6 +28,7 @@
     </div>
 
     <div th:each="entry : ${article.extra.genFileMap}">
+      <hr>
       <img th:src="@{${entry.value.url}}" alt="게시물 이미지" width="200" height="200">
     </div>
   </div>

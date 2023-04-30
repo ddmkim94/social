@@ -7,7 +7,7 @@
 <section layout:fragment="content">
   <div class="container">
     <h1>글수정</h1>
-    <form th:action="@{|/article/${article.id}/modify|}" method="post" enctype="multipart/form-data" onsubmit="ModifyForm__submit(this); return false;">
+    <form th:action method="post" enctype="multipart/form-data" onsubmit="ModifyForm__submit(this); return false;">
       <div>
         <label for="subject">제목</label>
         <input type="text" id="subject" name="subject" th:value="${article.subject}">
@@ -20,12 +20,24 @@
 
       <div>
         <span>본문 이미지</span>
-        <div>
-          <input type="file" name="common__inBody__1" accept="image/png, image/gif, image/jpeg">
-        </div>
-        <div>
-          <input type="file" name="common__inBody__2" accept="image/png, image/gif, image/jpeg">
-        </div>
+        <th:block th:each="i : ${#numbers.sequence(1, 5)}" th:with="genFile=${article.extra.genFileMap.get('common\_\_inBody\_\_' + i)}">
+          <div>
+            <span th:text="|${i}번 이미지|"></span>
+            <th:block th:if="${!#strings.isEmpty(genFile)}">
+              <hr>
+              <a th:href="@{${genFile.url}}" target="_blank">
+                <img class="rounded object-cover" title="새창에서 크게 보기" th:src="@{${genFile.url}}" alt="게시물 이미지" width="200" height="200">
+              </a>
+              <br>
+              <label>
+                <input type="checkbox" th:name="|delete___common\_\_inBody\_\_${i}|" value="">
+                <span>이미지 삭제</span>
+              </label>
+            </th:block>
+            <hr>
+            <input type="file" th:name="|common\_\_inBody\_\_${i}|" accept="image/png, image/gif, image/jpeg">
+          </div>
+        </th:block>
       </div>
 
       <button type="submit" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-3 py-2 text-center mr-2 my-2">글쓰기</button>
