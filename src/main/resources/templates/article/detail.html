@@ -28,7 +28,9 @@
     </div>
 
     <div>
-      이미지 : [[${article.extra}]]
+      이미지 :
+      <img th:src="@{${article.extra.genFileMap.common\_\_inBody__1.url}}" alt="img1">
+      <img th:src="@{${article.extra.genFileMap.common\_\_inBody__2.url}}" alt="img2">
     </div>
   </div>
 </section>
