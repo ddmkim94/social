@@ -1,6 +1,8 @@
 spring:
   profiles:
-    active: dev, base-addi # 기본적으로 dev, base-addi 프로필이 활성화된다. application.yml에 덮어쓰워짐
+    active: dev
+    include:
+      - base-addi
   security:
     oauth2:
       client:
@@ -17,22 +19,8 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
-  thymeleaf:
-    cache: false
-    prefix: file:src/main/resources/templates/
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      enabled: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/social?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
-    username: root
-    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: create
 custom: # 코드 작성을 할 때 파일 경로를 가져오기 위해 추가
   genFileDirPath: /Users/dongmin/Desktop/upload/
 logging:

@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${prodDbIp:172.17.0.1}:3306/social_prod?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
+    username: ${prodDbId:prod}
+    password: ${prodDbPw:prod}
+  jpa:
+    hibernate:
+      ddl-auto: none
+custom: # 코드 작성을 할 때 파일 경로를 가져오기 위해 추가
+  genFileDirPath: /gen
+logging:
+  level:
+    com.ll.social.app: info

@@ -1,7 +1,6 @@
 package com.ll.social.app.article.entity;
 
 import com.ll.social.app.base.entity.BaseEntity;
-import com.ll.social.app.fileupload.entity.GenFile;
 import com.ll.social.app.member.entity.Member;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
