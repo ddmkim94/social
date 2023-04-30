@@ -87,12 +87,15 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{id}/modify")
-    public String modify(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long id, @Valid ArticleForm articleForm) {
+    public String modify(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long id, @Valid ArticleForm articleForm, MultipartRequest multipartRequest) {
         Article article = articleService.getForPrintArticleById(id);
 
         if (memberContext.getId() != article.getMember().getId()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN); // 403
         }
+
+        Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+        RsData<Map<String, GenFile>> saveFileRsData = genFileService.saveFile(article, fileMap);
 
         articleService.modify(article, articleForm.getSubject(), articleForm.getContent());
 
