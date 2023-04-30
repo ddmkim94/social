@@ -27,6 +27,8 @@ public class DevInitData {
             Article article1 = articleService.write(member1.getId(), "제목1", "내용1");
             articleService.addGenFileByUrl(article1, "common", "inBody", 1, "https://mblogthumb-phinf.pstatic.net/20151115_83/owlkw_1447523205207J3E59_JPEG/Touch_%28Series%29_full_958683.jpg?type=w2");
             articleService.addGenFileByUrl(article1, "common", "inBody", 2, "https://pbs.twimg.com/media/CvkzoakWEAA7nCj.jpg");
+            articleService.addGenFileByUrl(article1, "common", "inBody", 3, "https://mblogthumb-phinf.pstatic.net/20151115_83/owlkw_1447523205207J3E59_JPEG/Touch_%28Series%29_full_958683.jpg?type=w2");
+            articleService.addGenFileByUrl(article1, "common", "inBody", 4, "https://pbs.twimg.com/media/CvkzoakWEAA7nCj.jpg");
 
             Article article2 = articleService.write(member2.getId(), "제목2", "내용2");
             articleService.addGenFileByUrl(article2, "common", "inBody", 1, "https://mblogthumb-phinf.pstatic.net/20151115_83/owlkw_1447523205207J3E59_JPEG/Touch_%28Series%29_full_958683.jpg?type=w2");
