@@ -7,10 +7,12 @@ import com.ll.social.app.fileupload.service.GenFileService;
 import com.ll.social.app.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ArticleService {
 
@@ -31,6 +33,7 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
+    @Transactional(readOnly = true)
     public Article getArticleById(Long id) {
         return articleRepository.findById(id).orElse(null);
     }
@@ -39,6 +42,7 @@ public class ArticleService {
         genFileService.addGenFileByUrl("article", article.getId(), typeCode, type2Code, fileNo, url);
     }
 
+    @Transactional(readOnly = true)
     public Article getForPrintArticleById(Long id) {
         Article article = getArticleById(id);
 
@@ -47,5 +51,12 @@ public class ArticleService {
         article.getExtra().put("genFileMap", genFileMap);
 
         return article;
+    }
+
+    public void modify(Article article, String subject, String content) {
+        article.setSubject(subject);
+        article.setContent(content);
+
+        articleRepository.save(article);
     }
 }

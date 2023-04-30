@@ -7,7 +7,7 @@
 <section layout:fragment="content">
   <div class="container">
     <h1>글수정</h1>
-    <form th:action="@{/article/modify}" method="post" enctype="multipart/form-data" onsubmit="ModifyForm__submit(this); return false;">
+    <form th:action="@{|/article/${article.id}/modify|}" method="post" enctype="multipart/form-data" onsubmit="ModifyForm__submit(this); return false;">
       <div>
         <label for="subject">제목</label>
         <input type="text" id="subject" name="subject" th:value="${article.subject}">

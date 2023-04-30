@@ -87,10 +87,16 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{id}/modify")
-    public String modify(@PathVariable Long id, @Valid ArticleForm articleForm) {
-
+    public String modify(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long id, @Valid ArticleForm articleForm) {
         Article article = articleService.getForPrintArticleById(id);
 
-        return "redirect:/article/%d".formatted(id);
+        if (memberContext.getId() != article.getMember().getId()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN); // 403
+        }
+
+        articleService.modify(article, articleForm.getSubject(), articleForm.getContent());
+
+        String msg = Util.url.encode("%d번 게시물이 수정되었습니다.".formatted(id));
+        return "redirect:/article/%d?msg=%s".formatted(id, msg);
     }
 }
