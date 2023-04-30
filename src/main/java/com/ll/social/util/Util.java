@@ -1,4 +1,4 @@
-package com.ll.social.app.util;
+package com.ll.social.util;
 
 import org.apache.tika.Tika;
 import org.springframework.web.client.RestTemplate;

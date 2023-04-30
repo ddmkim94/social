@@ -2,7 +2,7 @@ package com.ll.social.app.member.service;
 
 import com.ll.social.app.member.entity.Member;
 import com.ll.social.app.member.repository.MemberRepository;
-import com.ll.social.app.util.Util;
+import com.ll.social.util.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -7,7 +7,7 @@ import com.ll.social.app.base.dto.RsData;
 import com.ll.social.app.fileupload.entity.GenFile;
 import com.ll.social.app.fileupload.service.GenFileService;
 import com.ll.social.app.security.dto.MemberContext;
-import com.ll.social.app.util.Util;
+import com.ll.social.util.Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;

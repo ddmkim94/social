@@ -5,7 +5,7 @@ import com.ll.social.app.base.AppConfig;
 import com.ll.social.app.base.dto.RsData;
 import com.ll.social.app.fileupload.entity.GenFile;
 import com.ll.social.app.fileupload.repository.GenFileRepository;
-import com.ll.social.app.util.Util;
+import com.ll.social.util.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
