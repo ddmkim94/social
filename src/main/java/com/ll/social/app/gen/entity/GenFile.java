@@ -1,4 +1,4 @@
-package com.ll.social.app.fileupload.entity;
+package com.ll.social.app.gen.entity;
 
 
 import com.ll.social.app.base.AppConfig;

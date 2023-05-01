@@ -1,10 +1,10 @@
-package com.ll.social.app.fileupload.service;
+package com.ll.social.app.gen.service;
 
 import com.ll.social.app.article.entity.Article;
 import com.ll.social.app.base.AppConfig;
 import com.ll.social.app.base.dto.RsData;
-import com.ll.social.app.fileupload.entity.GenFile;
-import com.ll.social.app.fileupload.repository.GenFileRepository;
+import com.ll.social.app.gen.entity.GenFile;
+import com.ll.social.app.gen.repository.GenFileRepository;
 import com.ll.social.util.Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

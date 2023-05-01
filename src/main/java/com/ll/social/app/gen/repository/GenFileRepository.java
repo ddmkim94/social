@@ -1,6 +1,6 @@
-package com.ll.social.app.fileupload.repository;
+package com.ll.social.app.gen.repository;
 
-import com.ll.social.app.fileupload.entity.GenFile;
+import com.ll.social.app.gen.entity.GenFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

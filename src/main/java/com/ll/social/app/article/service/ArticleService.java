@@ -2,8 +2,8 @@ package com.ll.social.app.article.service;
 
 import com.ll.social.app.article.entity.Article;
 import com.ll.social.app.article.repository.ArticleRepository;
-import com.ll.social.app.fileupload.entity.GenFile;
-import com.ll.social.app.fileupload.service.GenFileService;
+import com.ll.social.app.gen.entity.GenFile;
+import com.ll.social.app.gen.service.GenFileService;
 import com.ll.social.app.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

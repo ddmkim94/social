@@ -1,4 +1,4 @@
-package com.ll.social.app.fileupload.controller;
+package com.ll.social.app.gen.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
