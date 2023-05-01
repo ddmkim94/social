@@ -24,16 +24,18 @@
           <div>
             <hr>
             <span th:text="|${i}번 이미지|"></span>
-            <th:block th:if="${!#strings.isEmpty(genFile)}">
-              <a th:href="@{${genFile.url}}" target="_blank">
+            <div th:if="${!#strings.isEmpty(genFile)}">
+              <a th:href="@{${genFile.url}}" target="_blank" class="inline-block">
                 <img class="rounded object-cover" title="새창에서 크게 보기" th:src="@{${genFile.url}}" alt="게시물 이미지" width="200" height="200">
               </a>
+              <br>
+              <a th:href="@{${genFile.downloadUrl}}">다운로드</a>
               <br>
               <label>
                 <input type="checkbox" value="Y" th:name="|delete___common\_\_inBody\_\_${i}|">
                 <span>이미지 삭제</span>
               </label>
-            </th:block>
+            </div>
 
             <br>
 
