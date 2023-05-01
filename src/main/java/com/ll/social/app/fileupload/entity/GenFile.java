@@ -1,6 +1,7 @@
 package com.ll.social.app.fileupload.entity;
 
 
+import com.ll.social.app.base.AppConfig;
 import com.ll.social.app.base.entity.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -37,11 +38,29 @@ public class GenFile extends BaseEntity {
 
     private String originFileName;
 
+    public void merge(GenFile other) {
+        relTypeCode = other.getRelTypeCode();
+        relId = other.getRelId();
+        typeCode = other.getTypeCode();
+        type2Code = other.getType2Code();
+        fileExtTypeCode = other.getFileExtTypeCode();
+        fileExtType2Code = other.getFileExtType2Code();
+        fileSize = other.getFileSize();
+        fileNo = other.getFileNo();
+        fileExt = other.getFileExt();
+        fileDir = other.getFileDir();
+        originFileName = other.getOriginFileName();
+    }
+
     public String getFileName() {
         return getId() + "." + getFileExt();
     }
 
     public String getUrl() {
         return "/gen/" + getFileDir() + "/" + getFileName();
+    }
+
+    public String getFilePath() {
+        return AppConfig.FILE_DIR_PATH + "/" + getFileDir() + "/" + getFileName();
     }
 }
