@@ -7,6 +7,7 @@ import com.ll.social.app.fileupload.entity.GenFile;
 import com.ll.social.app.fileupload.repository.GenFileRepository;
 import com.ll.social.util.Util;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GenFileService {
@@ -166,5 +168,42 @@ public class GenFileService {
                         (genFile1, genFile2) -> genFile1,
                         LinkedHashMap::new
                 ));
+    }
+
+    public void deleteFiles(Article article, Map<String, String> params) {
+        log.debug("params : {}", params);
+        List<String> deleteFiles = params.keySet()
+                .stream()
+                .filter(key -> key.startsWith("delete___"))
+                .map(key -> key.replace("delete___", ""))
+                .collect(Collectors.toList());
+
+        deleteFiles(article, deleteFiles);
+    }
+
+    public void deleteFiles(Article article, List<String> params) {
+        String relTypeCode = "article";
+        Long relId = article.getId();
+
+        params
+                .stream()
+                .forEach(key -> {
+                    String[] keyBits = key.split("__");
+
+                    String typeCode = keyBits[0];
+                    String type2Code = keyBits[1];
+                    int fileNo = Integer.parseInt(keyBits[2]);
+
+                    Optional<GenFile> optGenFile = genFileRepository.findByRelTypeCodeAndRelIdAndTypeCodeAndType2CodeAndFileNo(relTypeCode, relId, typeCode, type2Code, fileNo);
+
+                    if (optGenFile.isPresent()) {
+                        delete(optGenFile.get());
+                    }
+                });
+    }
+
+    private void delete(GenFile genFile) {
+        deleteFileFromStorage(genFile);
+        genFileRepository.delete(genFile);
     }
 }

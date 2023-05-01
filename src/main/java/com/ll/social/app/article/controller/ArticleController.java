@@ -16,10 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.server.ResponseStatusException;
@@ -87,7 +84,13 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{id}/modify")
-    public String modify(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long id, @Valid ArticleForm articleForm, MultipartRequest multipartRequest) {
+    public String modify(
+            @AuthenticationPrincipal MemberContext memberContext,
+            @PathVariable Long id,
+            @Valid ArticleForm articleForm,
+            MultipartRequest multipartRequest,
+            @RequestParam Map<String, String> params // @RequestParam + Map 으로 받으면 모든 필드를 전부 받아옴
+    ) {
         Article article = articleService.getForPrintArticleById(id);
 
         if (memberContext.getId() != article.getMember().getId()) {
@@ -95,6 +98,8 @@ public class ArticleController {
         }
 
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+        genFileService.deleteFiles(article, params);
         RsData<Map<String, GenFile>> saveFileRsData = genFileService.saveFile(article, fileMap);
 
         articleService.modify(article, articleForm.getSubject(), articleForm.getContent());
