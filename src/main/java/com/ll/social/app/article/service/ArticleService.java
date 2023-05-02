@@ -77,4 +77,8 @@ public class ArticleService {
         articleRepository.save(article);
         hashTagService.applyHashTags(article, hashTagContent);
     }
+
+    public List<Article> getArticles() {
+        return articleRepository.findAllByOrderByIdDesc();
+    }
 }
