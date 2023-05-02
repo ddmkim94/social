@@ -20,11 +20,7 @@
 
       <div>
         해시태그 :
-        <th:block th:each="hashTag : ${article.extra.hashTags}">
-          <a th:href="@{${hashTag.keyword.listUrl}}" class="text-decoration-none">
-            #[[${hashTag.keyword.content}]]
-          </a>
-        </th:block>
+        <th:block th:utext="${article.extra_hashTagLinks}"/>
       </div>
 
       <div>
