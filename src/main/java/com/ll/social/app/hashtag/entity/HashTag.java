@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = {"article", "keyword"})
 public class HashTag extends BaseEntity {
 
     @ManyToOne

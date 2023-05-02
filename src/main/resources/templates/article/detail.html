@@ -27,6 +27,15 @@
       내용 : [[${article.content}]]
     </div>
 
+    <div>
+      해시태그 :
+      <th:block th:each="hashTag : ${article.extra.hashTags}">
+        <a th:href="@{${hashTag.keyword.listUrl}}" class="text-decoration-none">
+          #[[${hashTag.keyword.content}]]
+        </a>
+      </th:block>
+    </div>
+
     <div th:each="entry : ${article.extra.genFileMap}">
       <hr>
       <img th:src="@{${entry.value.url}}" alt="게시물 이미지" width="200" height="200">

@@ -4,12 +4,14 @@ import com.ll.social.app.article.entity.Article;
 import com.ll.social.app.article.repository.ArticleRepository;
 import com.ll.social.app.gen.entity.GenFile;
 import com.ll.social.app.gen.service.GenFileService;
+import com.ll.social.app.hashtag.entity.HashTag;
 import com.ll.social.app.hashtag.service.HashTagService;
 import com.ll.social.app.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -56,7 +58,9 @@ public class ArticleService {
         Article article = getArticleById(id);
 
         Map<String, GenFile> genFileMap = genFileService.getRelGenFileMap(article);
+        List<HashTag> hashTags = hashTagService.getHashTags(article);
 
+        article.getExtra().put("hashTags", hashTags);
         article.getExtra().put("genFileMap", genFileMap);
 
         return article;
