@@ -79,6 +79,6 @@ public class ArticleService {
     }
 
     public List<Article> getArticles() {
-        return articleRepository.findAllByOrderByIdDesc();
+        return articleRepository.getQslArticles();
     }
 }
