@@ -107,7 +107,7 @@ public class ArticleController {
         genFileService.deleteFiles(article, params);
         RsData<Map<String, GenFile>> saveFileRsData = genFileService.saveFile(article, fileMap);
 
-        articleService.modify(article, articleForm.getSubject(), articleForm.getContent());
+        articleService.modify(article, articleForm.getSubject(), articleForm.getContent(), articleForm.getHashTagContent());
 
         String msg = Util.url.encode("%d번 게시물이 수정되었습니다.".formatted(id));
         return "redirect:/article/%d?msg=%s".formatted(id, msg);

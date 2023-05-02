@@ -19,6 +19,20 @@
       </div>
 
       <div>
+        해시태그 :
+        <th:block th:each="hashTag : ${article.extra.hashTags}">
+          <a th:href="@{${hashTag.keyword.listUrl}}" class="text-decoration-none">
+            #[[${hashTag.keyword.content}]]
+          </a>
+        </th:block>
+      </div>
+
+      <div>
+        <label for="hashTagContent">해시태그 수정</label>
+        <input type="text" id="hashTagContent" name="hashTagContent" th:value="${article.tags}" placeholder="#태그1 #태그2 ....">
+      </div>
+
+      <div>
         <span>본문 이미지</span>
         <th:block th:each="i : ${#numbers.sequence(1, 5)}" th:with="genFile=${article.extra.genFileMap.get('common\_\_inBody\_\_' + i)}">
           <div>
