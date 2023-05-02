@@ -10,8 +10,10 @@
 
     <ul>
       <li th:each="article : ${articles}">
-        <a th:href="@{|/article/${article.id}|}" th:text="${article.id}"></a>
-        <a th:href="@{|/article/${article.id}|}" th:text="${article.subject}"></a>
+        <a th:href="@{|/article/${article.id}|}" th:text="|번호 : ${article.id}|"></a>
+        <a th:href="@{|/article/${article.id}|}" th:text="|제목 : ${article.subject}|"></a>
+
+        <th:block th:utext="|태그 : ${article.extra_hashTagLinks}|" />
       </li>
     </ul>
   </div>
