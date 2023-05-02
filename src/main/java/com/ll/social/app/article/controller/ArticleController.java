@@ -42,7 +42,12 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
-    public String write(@AuthenticationPrincipal MemberContext memberContext, @Valid ArticleForm form, MultipartRequest multipartRequest, BindingResult bindingResult) {
+    public String write(
+            @AuthenticationPrincipal MemberContext memberContext,
+            @Valid ArticleForm form,
+            MultipartRequest multipartRequest,
+            BindingResult bindingResult
+    ) {
         if (bindingResult.hasErrors()) {
             return "article/write";
         }
@@ -50,7 +55,7 @@ public class ArticleController {
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         log.debug("fileMap : {}", fileMap);
 
-        Article article = articleService.write(memberContext.getId(), form.getSubject(), form.getContent());
+        Article article = articleService.write(memberContext.getId(), form.getSubject(), form.getContent(), form.getHashTagContent());
 
         RsData<Map<String, GenFile>> saveFileRsData = genFileService.saveFile(article, fileMap);
         log.debug("saveFileRsDate : {}", saveFileRsData);

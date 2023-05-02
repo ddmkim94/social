@@ -21,11 +21,11 @@ public class HashTagService {
     private final KeywordService keywordService;
     private final HashTagRepository hashTagRepository;
 
-    public void applyHashTags(Article article, String keywordContents) {
+    public void applyHashTags(Article article, String hashTagContent) {
 
         List<HashTag> oldHashTags = getHashTags(article);
 
-        List<String> keywordContentList = Arrays.stream(keywordContents.split("#"))
+        List<String> keywordContentList = Arrays.stream(hashTagContent.split("#"))
                 .map(String::trim)
                 .filter(s -> s.length() > 0)
                 .collect(Collectors.toList());
