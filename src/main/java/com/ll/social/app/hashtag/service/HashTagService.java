@@ -8,6 +8,7 @@ import com.ll.social.app.keyword.service.KeywordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -21,11 +22,26 @@ public class HashTagService {
     private final HashTagRepository hashTagRepository;
 
     public void applyHashTags(Article article, String keywordContents) {
+
+        List<HashTag> oldHashTags = getHashTags(article);
+
         List<String> keywordContentList = Arrays.stream(keywordContents.split("#"))
                 .map(String::trim)
                 .filter(s -> s.length() > 0)
                 .collect(Collectors.toList());
 
+        List<HashTag> needToDelete = new ArrayList<>();
+        for (HashTag oldHashTag : oldHashTags) {
+            boolean contains = keywordContentList
+                    .stream()
+                    .anyMatch(s -> s.equals(oldHashTag.getKeyword().getContent()));
+
+            if (!contains) {
+                needToDelete.add(oldHashTag);
+            }
+        }
+
+        needToDelete.forEach(hashTag -> hashTagRepository.delete(hashTag));
         keywordContentList.forEach(keywordContent -> saveHashTag(article, keywordContent));
     }
 
