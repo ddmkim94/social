@@ -21,6 +21,11 @@ spring:
             user-name-attribute: id
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+  cache:
+    type: redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
 custom: # 코드 작성을 할 때 파일 경로를 가져오기 위해 추가
   genFileDirPath: /Users/dongmin/Desktop/upload/
 logging:
